@@ -1,0 +1,24 @@
+.btn {
+  border: none;
+  padding: 8px;
+  color: white;
+  font-size: 16px;
+  background-color: #673AB7;
+  text-decoration: none;
+  display: block;
+  margin-top: 15px;
+}
+
+.form label {
+  display: block;
+  padding-bottom: 10px;
+}
+
+.form input {
+  margin-bottom: 20px;
+  border: none;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  font-size: 16px;
+}

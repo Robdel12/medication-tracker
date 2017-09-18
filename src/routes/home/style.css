@@ -1,5 +1,7 @@
-.home {
-  padding: 56px 20px;
-  min-height: 100%;
-  width: 100%;
+.btn {
+  border: none;
+  padding: 8px;
+  color: white;
+  background-color: #673AB7;
+  text-decoration: none;
 }

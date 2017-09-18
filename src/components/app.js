@@ -3,6 +3,7 @@ import { Router } from 'preact-router';
 
 import Header from './header';
 import Home from '../routes/home';
+import AddMedication from '../routes/add-medication';
 // import Home from 'async!./home';
 
 export default class App extends Component {
@@ -14,13 +15,32 @@ export default class App extends Component {
     this.currentUrl = e.url;
   };
 
+  initLocalStorage() {
+    let medications = window.localStorage.getItem('medications');
+
+    if (!medications) {
+      window.localStorage.setItem('medications', JSON.stringify({
+        medications: []
+      }));
+    } else {
+      return;
+    }
+  }
+
+  componentDidMount() {
+    this.initLocalStorage();
+  }
+
   render() {
     return (
       <div id="app">
         <Header />
-        <Router onChange={this.handleRoute}>
-          <Home path="/" />
-        </Router>
+        <div style={{padding: "10px"}}>
+          <Router onChange={this.handleRoute}>
+            <Home path="/" />
+            <AddMedication path="/new" />
+          </Router>
+        </div>
       </div>
     );
   }
