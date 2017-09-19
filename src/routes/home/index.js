@@ -30,9 +30,11 @@ export default class Home extends Component {
     return medications.map((med, index) => {
       let timeTaken = moment(med.timeTaken);
       let timeUp =  moment(med.timeTaken).add(med.dosageDuration, 'hours');
+      let timeLeft = moment().to(timeUp);
+      let hasExpired = timeLeft.includes('ago');
 
       return (
-        <div class={style.medCard}>
+        <div class={style.medCard} style={hasExpired ? {border: "1px solid #c78484"} : null}>
           <div class={style.cardTitle}>
             <h4>
               {med.name}
@@ -41,7 +43,8 @@ export default class Home extends Component {
           <div class={style.cardBody}>
             <p>Dosage: {med.dosage}</p>
             <p>Time Taken: {timeTaken.format("dddd, MM/DD, h a")}</p>
-            <p>Time Left: {moment().to(timeUp)}</p>
+            <p>Time Left: {timeLeft}</p>
+            <p>Has expired: {`${hasExpired}`}</p>
           </div>
           <div class={style.cardFooter}>
             <button  onClick={this.removeMed.bind(this, index)}>
