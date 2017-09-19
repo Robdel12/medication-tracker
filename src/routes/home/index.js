@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import moment from 'moment';
 import { Link } from 'preact-router/match';
 import style from './style';
 
@@ -27,16 +28,26 @@ export default class Home extends Component {
     let medications = this.state.medications;
 
     return medications.map((med, index) => {
+      let timeTaken = moment(med.timeTaken);
+      let timeUp =  moment(med.timeTaken).add(med.dosageDuration, 'hours');
+
       return (
-        <div>
-          <h4>
-            {med.name}
-            <button aria-label="Remove Medication" onClick={this.removeMed.bind(this, index)}>
-              X
+        <div class={style.medCard}>
+          <div class={style.cardTitle}>
+            <h4>
+              {med.name}
+            </h4>
+          </div>
+          <div class={style.cardBody}>
+            <p>Dosage: {med.dosage}</p>
+            <p>Time Taken: {timeTaken.format("dddd, MM/DD, h a")}</p>
+            <p>Time Left: {moment().to(timeUp)}</p>
+          </div>
+          <div class={style.cardFooter}>
+            <button  onClick={this.removeMed.bind(this, index)}>
+              Remove {med.name}
             </button>
-          </h4>
-          <p>Dosage: {med.dosage}</p>
-          <p>Time Taken: {med.timeTaken}</p>
+          </div>
         </div>
       );
     });
