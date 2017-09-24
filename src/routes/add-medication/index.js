@@ -42,16 +42,21 @@ export default class AddMedication extends Component {
         <h1 tabIndex="-1" ref={c => this.h1 = c}>Add a new medication</h1>
         <form onSubmit={this.handleSubmit} class={style.form}>
           <label htmlFor="name">Name</label>
-          <input type="text" id="name" required placeholder="Advil" />
+          <input type="text" id="name" required
+                 placeholder="Advil" autocomplete="medication-name"/>
 
           <label htmlFor="dosage">Dosage</label>
-          <input type="text" id="dosage" required placeholder="200mg" />
+          <input type="text" id="dosage" required
+                 placeholder="200mg" autocomplete="medication-dosage" />
 
           <label htmlFor="time_taken">Time taken (24 hour format)</label>
-          <input type="text" id="time_taken" required placeholder={`${moment().format('H:mm')}`} />
+          <input type="text" id="time_taken" required
+                 placeholder={`${moment().format('H:mm')}`}
+                 autocomplete="medication-time-taken" />
 
           <label htmlFor="doseage_duration">Dosage duration (in hours)</label>
-          <input type="text" id="doseage_duration" required placeholder="6" />
+          <input type="text" id="doseage_duration" required
+                 placeholder="6" autocomplete="medication-dosage-duration" />
 
           <button class={style.btn}>Submit</button>
         </form>

@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import Medication from '../../utils/medication';
 import moment from 'moment';
 import { Link } from 'preact-router/match';
 import style from './style';
@@ -26,15 +27,15 @@ export default class Home extends Component {
 
   renderMedications() {
     let medications = this.state.medications;
+    medications.sort(function(a, b) {
+      return new Date(b.timeTaken) - new Date(a.timeTaken);
+    });
 
     return medications.map((med, index) => {
-      let timeTaken = moment(med.timeTaken);
-      let timeUp =  moment(med.timeTaken).add(med.dosageDuration, 'hours');
-      let timeLeft = moment().to(timeUp);
-      let hasExpired = timeLeft.includes('ago');
+      let medModel = new Medication(med);
 
       return (
-        <div class={style.medCard} style={hasExpired ? {border: "1px solid #c78484"} : null}>
+        <div class={style.medCard} style={medModel.hasExpired ? {border: "1px solid #c78484"} : null}>
           <div class={style.cardTitle}>
             <h4>
               {med.name}
@@ -42,9 +43,9 @@ export default class Home extends Component {
           </div>
           <div class={style.cardBody}>
             <p>Dosage: {med.dosage}</p>
-            <p>Time Taken: {timeTaken.format("dddd, MM/DD, h a")}</p>
-            <p>Time Left: {timeLeft}</p>
-            <p>Has expired: {`${hasExpired}`}</p>
+            <p>Time Taken: {medModel.displayTakenTime}</p>
+            <p>Time Left: {medModel.timeLeft}</p>
+            <p>Has expired: {`${medModel.hasExpired}`}</p>
           </div>
           <div class={style.cardFooter}>
             <button  onClick={this.removeMed.bind(this, index)}>
