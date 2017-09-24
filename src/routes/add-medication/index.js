@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import moment from 'moment';
 import style from './style';
 import { route } from 'preact-router';
+import { setStore } from '../../utils/localstorage';
 
 // follow up: add timer to show how much time is left
 export default class AddMedication extends Component {
@@ -9,10 +10,9 @@ export default class AddMedication extends Component {
     this.h1.focus();
   }
 
-  //oh god hackvill. TURN AROUND NOW
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-    let currentMedication = JSON.parse(window.localStorage.getItem('medications'));
+    let currentMedication = this.props.medications;
     let date = new Date();
     let timeTaken = event.target.time_taken.value.split(':');
     date.setHours(timeTaken[0], timeTaken[1]);
@@ -24,9 +24,8 @@ export default class AddMedication extends Component {
       dosageDuration: event.target.doseage_duration.value
     };
 
-    let newMedicationData = Object.assign({}, currentMedication);
-    newMedicationData.medications.push(newMed);
-    window.localStorage.setItem('medications', JSON.stringify(newMedicationData));
+    currentMedication.push(newMed);
+    setStore(currentMedication);
 
     event.target.name.value = "";
     event.target.dosage.value = "";
@@ -42,20 +41,20 @@ export default class AddMedication extends Component {
         <h1 tabIndex="-1" ref={c => this.h1 = c}>Add a new medication</h1>
         <form onSubmit={this.handleSubmit} class={style.form}>
           <label htmlFor="name">Name</label>
-          <input type="text" id="name" required
+          <input type="text" id="name" required name="med-name"
                  placeholder="Advil" autocomplete="medication-name"/>
 
           <label htmlFor="dosage">Dosage</label>
-          <input type="text" id="dosage" required
+          <input type="text" id="dosage" required name="dosage"
                  placeholder="200mg" autocomplete="medication-dosage" />
 
           <label htmlFor="time_taken">Time taken (24 hour format)</label>
-          <input type="text" id="time_taken" required
+          <input type="text" id="time_taken" required name="time-taken"
                  placeholder={`${moment().format('H:mm')}`}
                  autocomplete="medication-time-taken" />
 
           <label htmlFor="doseage_duration">Dosage duration (in hours)</label>
-          <input type="text" id="doseage_duration" required
+          <input type="text" id="doseage_duration" required name="doseage-duration"
                  placeholder="6" autocomplete="medication-dosage-duration" />
 
           <button class={style.btn}>Submit</button>

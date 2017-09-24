@@ -1,23 +1,11 @@
 import { h, Component } from 'preact';
 import Medication from '../../utils/medication';
-import moment from 'moment';
 import { Link } from 'preact-router/match';
 import style from './style';
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    let medications = JSON.parse(window.localStorage.getItem('medications')).medications;
-
-    this.setState({medications});
-  }
-
-  removeMed(index) {
-    let medications = { medications: this.state.medications };
-
-    medications.medications.splice(index, 1);
-    window.localStorage.setItem('medications', JSON.stringify(medications));
-    this.setState({medications: medications.medications});
+  removeMed = (index) => {
+    this.props.removeMed(index);
     this.h1.focus();
   }
 
@@ -26,10 +14,12 @@ export default class Home extends Component {
   }
 
   renderMedications() {
-    let medications = this.state.medications;
-    medications.sort(function(a, b) {
-      return new Date(b.timeTaken) - new Date(a.timeTaken);
-    });
+    let medications = this.props.medications;
+
+    // ugh, ssr
+    if (!medications) {
+      return null;
+    }
 
     return medications.map((med, index) => {
       let medModel = new Medication(med);
@@ -48,7 +38,7 @@ export default class Home extends Component {
             <p>Has expired: {`${medModel.hasExpired}`}</p>
           </div>
           <div class={style.cardFooter}>
-            <button  onClick={this.removeMed.bind(this, index)}>
+            <button onClick={this.removeMed.bind(this, index)}>
               Remove {med.name}
             </button>
           </div>
