@@ -3,8 +3,8 @@ import { Link } from 'preact-router/match';
 import style from './style';
 
 export default class Header extends Component {
-  refresh = () => {
-    this.props.refreshStore();
+  refresh() {
+    window.location.reload();
   }
 
   render() {

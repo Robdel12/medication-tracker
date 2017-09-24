@@ -40,11 +40,12 @@ export default class App extends Component {
   render(props, state) {
     return (
       <div id="app">
-        <Header refreshStore={this.refreshStore} />
+        <Header />
 
         <div style={{padding: "10px"}}>
           <Router onChange={this.handleRoute}>
-            <Home path="/" medications={state.medications}
+            <Home path="/"
+                  medications={state.medications}
                   removeMed={this.removeMed} />
 
             <AddMedication path="/new" medications={state.medications} />
