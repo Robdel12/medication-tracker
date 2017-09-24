@@ -7,7 +7,7 @@ import { setStore } from '../../utils/localstorage';
 // follow up: add timer to show how much time is left
 export default class AddMedication extends Component {
   componentDidMount() {
-    this.h1.focus();
+    this.h2.focus();
   }
 
   handleSubmit = (event) => {
@@ -38,7 +38,7 @@ export default class AddMedication extends Component {
   render() {
     return (
       <div class={style.home}>
-        <h1 tabIndex="-1" ref={c => this.h1 = c}>Add a new medication</h1>
+        <h2 tabIndex="-1" ref={c => this.h2 = c}>Add a new medication</h2>
         <form onSubmit={this.handleSubmit} class={style.form}>
           <label htmlFor="name">Name</label>
           <input type="text" id="name" required name="med-name"

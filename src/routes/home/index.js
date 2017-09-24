@@ -10,7 +10,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    this.h1.focus();
+    this.h2.focus();
   }
 
   renderMedications() {
@@ -51,7 +51,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <h1 tabIndex="-1" ref={c => this.h1 = c}>Medications</h1>
+        <h2 tabIndex="-1" ref={c => this.h2 = c}>Medications</h2>
         <Link class={style.btn} activeClassName="active" href="/new">
           Add Medication
         </Link>
