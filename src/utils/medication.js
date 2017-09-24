@@ -21,6 +21,10 @@ class Medication {
     return moment(this.medication.timeTaken).add(this.medication.dosageDuration, 'hours');
   }
 
+  get timeUpDisplay() {
+    return this.timeUp.format("h:mma (MM/DD)");
+  }
+
   get timeLeft() {
     return moment().to(this.timeUp);
   }

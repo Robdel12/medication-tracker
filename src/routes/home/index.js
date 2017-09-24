@@ -35,6 +35,7 @@ export default class Home extends Component {
             <p>Dosage: {med.dosage}</p>
             <p>Time Taken: {medModel.displayTakenTime}</p>
             <p>Time Left: {medModel.timeLeft}</p>
+            <p>Time Up: {medModel.timeUpDisplay}</p>
             <p>Has expired: {`${medModel.hasExpired}`}</p>
           </div>
           <div class={style.cardFooter}>
